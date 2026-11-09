@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111214">
+<title>JGLCUSTOMS IPTV PARA ROKU — MANUAL PASO A PASO</title>
+<style>
+:root {
+  --bg: #121317;
+  --panel: #1B1C22;
+  --panel-soft: #26272E;
+  --line: #33353F;
+  --text: #F6F6F3;
+  --muted: #8B8E9B;
+  --gold: #FF5A1F;
+  --gold-soft: #ff8a5f;
+  --red: #7A2E11;
+  --red-soft: #ffb49b;
+  --teal: #17B3A3;
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 28px; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.65;
+}
+a { color: inherit; }
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 13px clamp(18px, 5vw, 64px);
+  background: rgba(18,19,23,.90);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+.brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.08em; font-size:.78rem; }
+.brand-mark {
+  width: 34px; height: 34px; display:grid; place-items:center;
+  border-radius: 11px; color:#171717; background:var(--gold);
+  box-shadow: 0 0 22px rgba(212,175,55,.22);
+}
+.top-label { color:var(--muted); font-size:.78rem; }
+.layout { width:min(1120px, calc(100% - 36px)); margin:42px auto 80px; }
+.hero {
+  position:relative; overflow:hidden; padding: clamp(28px, 6vw, 62px);
+  border:1px solid var(--line); border-radius:4px;
+  background: var(--panel);
+  box-shadow: 0 18px 45px rgba(0,0,0,.28);
+}
+.hero::after {
+  content:""; position:absolute; width:280px; height:280px; right:-90px; top:-130px;
+  border:1px solid rgba(255,90,31,.18); border-radius:50%;
+  box-shadow:0 0 0 28px rgba(255,90,31,.025), 0 0 0 58px rgba(255,90,31,.02);
+}
+.eyebrow { color:var(--gold); font-size:.72rem; font-weight:800; letter-spacing:.22em; text-transform:uppercase; }
+h1 { max-width:800px; margin:13px 0 12px; font-size:clamp(2rem, 5vw, 3.8rem); line-height:1.08; letter-spacing:-.045em; }
+.hero p { max-width:680px; color:#d1cec6; margin:0; font-size:1.02rem; }
+.hero-meta { display:flex; flex-wrap:wrap; gap:9px; margin-top:25px; }
+.pill { border:1px solid rgba(255,90,31,.30); background:rgba(0,0,0,.22); color:var(--gold-soft); padding:7px 12px; border-radius:999px; font-size:.76rem; }
+.toc {
+  margin:24px 0 30px; padding:22px; border:1px solid var(--line);
+  border-radius:4px; background:rgba(25,26,29,.82);
+}
+.toc-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:13px; }
+.toc h2 { margin:0; color:var(--gold-soft); font-size:.9rem; letter-spacing:.12em; text-transform:uppercase; }
+.toc-links { display:flex; flex-wrap:wrap; gap:8px; }
+.toc a {
+  text-decoration:none; color:#d8d5ce; font-size:.78rem;
+  padding:7px 10px; border-radius:9px; background:#222327; border:1px solid var(--line);
+  transition:.2s ease;
+}
+.toc a:hover { color:var(--gold); border-color:rgba(255,90,31,.5); transform:translateY(-2px); }
+.section-card {
+  margin:18px 0; padding:clamp(22px, 4vw, 36px);
+  background:var(--panel);
+  border:1px solid var(--line); border-radius:4px;
+  box-shadow:0 12px 35px rgba(0,0,0,.20);
+}
+.section-card:hover { border-color:rgba(255,90,31,.42); }
+.section-kicker { color:var(--gold); font-size:.68rem; font-weight:800; letter-spacing:.2em; }
+.section-card h2 {
+  margin:5px 0 22px; padding-bottom:15px; border-bottom:1px solid rgba(255,90,31,.22);
+  font-size:clamp(1.2rem, 2.5vw, 1.7rem); line-height:1.25; letter-spacing:-.02em;
+}
+.section-content p { color:#d4d1ca; margin:12px 0; }
+.section-content .lead-note { color:var(--gold-soft); font-size:1.02rem; }
+.section-content ul, .section-content ol { margin:12px 0 18px; padding-left:1.55rem; color:#d4d1ca; }
+.section-content li { padding:4px 0 4px 5px; }
+.section-content li::marker { color:var(--gold); font-weight:800; }
+.subhead { margin:24px 0 8px; color:var(--gold-soft); font-size:.92rem; letter-spacing:.04em; }
+.warning-head { color:var(--red-soft); }
+.section-content h3 + ul, .section-content h3 + ol { margin-top:7px; }
+.section-content h3.warning-head + ul { padding:14px 18px 14px 36px; border-left:3px solid var(--red); border-radius:0 12px 12px 0; background:rgba(128,24,24,.14); }
+.section-content p:has(+ ul), .section-content p:has(+ ol) { margin-bottom:6px; }
+.footer { margin-top:28px; padding:22px; text-align:center; color:var(--muted); font-size:.78rem; }
+.footer strong { color:var(--gold); letter-spacing:.12em; }
+@media (max-width:650px) {
+  .top-label { display:none; }
+  .layout { margin-top:22px; }
+  .toc-head { align-items:flex-start; flex-direction:column; }
+  .section-card { border-radius:14px; }
+}
+@media print {
+  body { background:#fff; color:#171717; }
+  .topbar, .toc { display:none; }
+  .layout { width:100%; margin:0; }
+  .hero, .section-card { background:#fff; color:#171717; box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+  .hero p, .section-content p, .section-content li { color:#222; }
+  .section-card h2, .subhead { color:#704f00; }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+.brand, .eyebrow, .section-kicker, .pill, .toc h2, .toc a, .footer {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+.section-kicker { color: var(--muted); }
+.section-content li::marker { color: var(--gold); }
+.section-content h3.warning-head + ul {
+  background: rgba(255,90,31,.06);
+  border-left-color: var(--gold);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">J</span><span>JGLCUSTOMS <span style="color:var(--gold)">/</span> ROKU</span></div>
+  <div class="top-label">MANUAL DE INSTALACIÓN · GUÍA DE USO</div>
+</header>
+<main class="layout">
+  <section class="hero">
+    <div class="eyebrow">Manual paso a paso</div>
+    <h1>JGLCUSTOMS IPTV PARA ROKU — MANUAL PASO A PASO</h1>
+    <p>Lee todo en orden. No necesitas saber programación.</p>
+    <div class="hero-meta"><span class="pill">Roku TV</span><span class="pill">Developer Mode</span><span class="pill">Instalación manual</span></div>
+  </section>
+  <nav class="toc">
+    <div class="toc-head"><h2>Contenido del manual</h2></div>
+    <div class="toc-links"><a href="#seccion-1">ARCHIVOS QUE DEBES TENER</a>
+<a href="#seccion-2">LO QUE NECESITAS</a>
+<a href="#seccion-3">PARTE 1 — ACTIVAR DEVELOPER MODE</a>
+<a href="#seccion-4">PARTE 2 — ABRIR EL INSTALADOR DEL ROKU</a>
+<a href="#seccion-5">PARTE 3 — INSTALAR JGLCUSTOMS</a>
+<a href="#seccion-6">PARTE 4 — USAR JGLCUSTOMS</a>
+<a href="#seccion-7">CÓMO ACTUALIZAR LA APLICACIÓN</a>
+<a href="#seccion-8">SOLUCIÓN DE PROBLEMAS</a>
+<a href="#seccion-9">CÓMO PEDIR AYUDA CORRECTAMENTE</a>
+<a href="#seccion-10">COMPATIBILIDAD</a>
+<a href="#seccion-11">AVISO IMPORTANTE SOBRE ESTA VERSIÓN</a>
+<a href="#seccion-12">AVISO DE USO Y CONTENIDO</a>
+<a href="#seccion-13">VERIFICACIÓN OPCIONAL DEL ARCHIVO</a>
+<a href="#seccion-14">RESUMEN RÁPIDO</a></div>
+  </nav>
+  <section class="section-card hero-card" id="seccion-1"><div class="section-kicker">SECCIÓN 01</div><h2>ARCHIVOS QUE DEBES TENER</h2><div class="section-content"><ol><li>app.zip</li><li>LEEME-INSTALACION-JGLCUSTOMS.txt (este manual)</li></ol>
+<h3 class="subhead warning-head">IMPORTANTE:</h3>
+<ul><li>NO abras ni descomprimas app.zip.</li><li>NO cambies los archivos que están dentro de app.zip.</li><li>El Roku y el celular o computadora deben estar conectados a la MISMA red Wi-Fi.</li><li>Solamente puede existir una aplicación instalada por Developer Mode a la vez. Si instalas otra aplicación de desarrollo, reemplazará JGLCUSTOMS.</li></ul></div></section><section class="section-card" id="seccion-2"><div class="section-kicker">SECCIÓN 02</div><h2>LO QUE NECESITAS</h2><div class="section-content"><ul><li>Una televisión Roku TV o un reproductor Roku.</li><li>El control remoto del Roku.</li><li>Una computadora o celular con navegador web.</li><li>El archivo app.zip.</li><li>Internet y acceso a la misma red local del Roku.</li></ul></div></section><section class="section-card" id="seccion-3"><div class="section-kicker">SECCIÓN 03</div><h2>PARTE 1 — ACTIVAR DEVELOPER MODE</h2><div class="section-content"><ol><li>Enciende el Roku y quédate en la pantalla principal donde aparecen las apps.</li></ol>
+<ol><li>En el control remoto presiona exactamente esta secuencia:</li></ol>
+<p>HOME 3 veces ARRIBA 2 veces DERECHA IZQUIERDA DERECHA IZQUIERDA DERECHA</p>
+<p>HOME es el botón que tiene una casita.</p>
+<ol><li>Aparecerá una pantalla llamada Developer Settings o Configuración de desarrollador.</li></ol>
+<ol><li>Anota la dirección IP que aparece. Se verá parecida a esta:</li></ol>
+<p>192.168.1.25</p>
+<p>La dirección de tu Roku será diferente. No copies la del ejemplo.</p>
+<ol><li>Selecciona &quot;Enable installer and restart&quot; o &quot;Activar instalador y reiniciar&quot;.</li></ol>
+<ol><li>Acepta el acuerdo de desarrollador.</li></ol>
+<ol><li>Crea una contraseña para el instalador.</li></ol>
+<h3 class="subhead warning-head">IMPORTANTE:</h3>
+<ul><li>Apunta esa contraseña.</li><li>Distingue entre mayúsculas y minúsculas.</li><li>Esa NO es la contraseña de tu Wi-Fi ni la de tu cuenta Roku.</li></ul>
+<ol><li>Confirma la contraseña. El Roku se reiniciará automáticamente.</li></ol></div></section><section class="section-card" id="seccion-4"><div class="section-kicker">SECCIÓN 04</div><h2>PARTE 2 — ABRIR EL INSTALADOR DEL ROKU</h2><div class="section-content"><ol><li>Espera a que el Roku termine de reiniciar.</li></ol>
+<ol><li>En la computadora o celular conectado al mismo Wi-Fi, abre Chrome, Edge, Firefox, Brave o cualquier navegador.</li></ol>
+<ol><li>En la barra donde normalmente escribes una página, escribe:</li></ol>
+<p>http://DIRECCION-IP-DEL-ROKU</p>
+<p>Ejemplo solamente:</p>
+<p>http://192.168.1.25</p>
+<p>Debes usar la IP que anotaste en tu televisión.</p>
+<ol><li>Si el navegador dice &quot;No seguro&quot;, es normal porque estás entrando directamente al Roku dentro de tu propia red.</li></ol>
+<ol><li>Cuando pida usuario y contraseña escribe:</li></ol>
+<p>Usuario: rokudev Contraseña: la que creaste al activar Developer Mode</p>
+<ol><li>Debe abrirse una página de Roku llamada Development Application Installer.</li></ol></div></section><section class="section-card" id="seccion-5"><div class="section-kicker">SECCIÓN 05</div><h2>PARTE 3 — INSTALAR JGLCUSTOMS</h2><div class="section-content"><ol><li>En la página del instalador busca el botón &quot;Upload&quot;.</li></ol>
+<ol><li>Presiona &quot;Upload&quot; y selecciona el archivo:</li></ol>
+<p>app.zip</p>
+<ol><li>Espera a que termine de subir. No cierres el navegador y no apagues el Roku.</li></ol>
+<ol><li>Si es la primera instalación, presiona el botón para instalar.</li></ol>
+<ol><li>Si ya existe una aplicación instalada, aparecerán opciones como:</li></ol>
+<ul><li>Replace with zip</li><li>Replace with squashfs</li></ul>
+<p>Presiona:</p>
+<p>REPLACE WITH ZIP</p>
+<ol><li>Espera unos segundos. JGLCUSTOMS debe abrirse automáticamente en la TV.</li></ol>
+<ol><li>La primera carga puede tardar un poco mientras prepara la sesión y descarga las categorías. No presiones muchos botones durante esa primera carga.</li></ol></div></section><section class="section-card" id="seccion-6"><div class="section-kicker">SECCIÓN 06</div><h2>PARTE 4 — USAR JGLCUSTOMS</h2><div class="section-content"><ul><li>FLECHAS: navegar por menús, categorías y canales.</li><li>OK: seleccionar, abrir o reproducir.</li><li>ATRÁS: regresar a la pantalla anterior o cerrar un panel.</li><li>HOME: salir completamente de la aplicación y volver al menú del Roku.</li></ul>
+<h3 class="subhead">TV EN VIVO:</h3>
+<ul><li>En la pantalla principal selecciona TV en vivo.</li><li>OK sobre un canal comienza la reproducción.</li><li>En pantalla completa, ARRIBA y ABAJO cambian de canal.</li><li>OK abre el panel de categorías y canales.</li><li>ATRÁS cierra primero el panel; al presionarlo nuevamente sale del reproductor.</li></ul>
+<h3 class="subhead">PELÍCULAS Y SERIES:</h3>
+<ul><li>Selecciona el póster para abrir su información.</li><li>Presiona Reproducir para iniciar.</li><li>ATRÁS regresa a la ficha o al catálogo.</li><li>Algunos videos H.265/HEVC requieren un Roku compatible, normalmente un modelo 4K. La aplicación no puede convertir un formato que el equipo no decodifica.</li></ul>
+<h3 class="subhead">CONTENIDO +18:</h3>
+<ul><li>Debes crear y recordar tu propio PIN.</li><li>Si escribes un PIN incorrecto, puedes volver a intentarlo o presionar ATRÁS.</li><li>No compartas el PIN con menores.</li></ul></div></section><section class="section-card" id="seccion-7"><div class="section-kicker">SECCIÓN 07</div><h2>CÓMO ACTUALIZAR LA APLICACIÓN</h2><div class="section-content"><ol><li>Consigue el nuevo archivo app.zip.</li><li>No descomprimas el archivo.</li><li>Abre nuevamente en el navegador:</li></ol>
+<p>http://IP-DEL-ROKU</p>
+<ol><li>Inicia sesión con:</li></ol>
+<p>Usuario: rokudev Contraseña: tu contraseña de Developer Mode</p>
+<ol><li>Presiona Upload y selecciona el nuevo app.zip.</li><li>Presiona Replace with zip.</li><li>Espera a que la aplicación arranque.</li></ol>
+<p>Evita presionar Delete antes de actualizar. Borrar la aplicación puede eliminar ajustes locales, historial, último canal o configuración del PIN.</p></div></section><section class="section-card" id="seccion-8"><div class="section-kicker">SECCIÓN 08</div><h2>SOLUCIÓN DE PROBLEMAS</h2><div class="section-content"><p>PROBLEMA: NO ABRE LA PÁGINA DEL ROKU</p>
+<ol><li>Confirma que el Roku y el celular o PC estén en el mismo Wi-Fi.</li><li>Escribe http:// antes de la IP; no uses https://.</li><li>Revisa que la IP no haya cambiado en:</li></ol>
+<p>Configuración &gt; Red &gt; Acerca de</p>
+<ol><li>Desactiva temporalmente VPN o proxy en el celular o computadora.</li><li>No uses una red de invitados, porque puede bloquear la comunicación entre dispositivos.</li><li>Reinicia el Roku y el router si continúa sin abrir.</li></ol>
+<p>PROBLEMA: NO ACEPTA EL USUARIO O LA CONTRASEÑA</p>
+<ul><li>El usuario siempre es: rokudev</li><li>La contraseña es la creada en Developer Mode.</li><li>Revisa mayúsculas y minúsculas.</li><li>No uses la contraseña de la cuenta Roku ni la del Wi-Fi.</li><li>Si olvidaste la contraseña, vuelve a la pantalla de Developer Settings y configura nuevamente el instalador.</li></ul>
+<p>PROBLEMA: DICE QUE YA HAY UNA APLICACIÓN INSTALADA</p>
+<ul><li>Presiona Replace with zip.</li><li>Roku permite solamente una aplicación de Developer Mode al mismo tiempo.</li><li>La nueva aplicación reemplaza la anterior.</li></ul>
+<p>PROBLEMA: DICE QUE LA VERSIÓN ES IDÉNTICA</p>
+<ul><li>Primero intenta Replace with zip otra vez.</li><li>Si Roku se niega completamente, usa Delete y vuelve a instalar app.zip.</li><li>ADVERTENCIA: Delete puede borrar ajustes locales, PIN, historial y último canal guardado.</li></ul>
+<p>PROBLEMA: LA APLICACIÓN NO ABRE O REGRESA AL HOME</p>
+<ol><li>Reinicia el Roku desde:</li></ol>
+<p>Configuración &gt; Sistema &gt; Energía &gt; Reiniciar sistema</p>
+<p>En algunos modelos aparece directamente en Configuración &gt; Sistema.</p>
+<ol><li>Vuelve a instalar app.zip.</li><li>Toma una fotografía del error completo si aparece alguno.</li><li>Anota qué estabas haciendo justo antes del problema.</li><li>No compartas contraseñas, direcciones privadas, tokens ni datos personales.</li></ol>
+<p>PROBLEMA: UN CANAL NO REPRODUCE</p>
+<ul><li>Espera hasta 15 segundos.</li><li>Prueba otro canal de la misma sección.</li><li>Regresa a la lista y vuelve a intentarlo.</li><li>Reinicia la aplicación si todos los canales fallan.</li><li>Un canal puede estar temporalmente fuera de servicio aunque la aplicación funcione correctamente.</li></ul>
+<p>PROBLEMA: PELÍCULA O EPISODIO DICE FORMATO NO COMPATIBLE</p>
+<ul><li>El archivo puede usar H.265/HEVC u otro formato no soportado por ese Roku.</li><li>Para mayor compatibilidad con HEVC se recomienda un Roku 4K compatible.</li><li>Cambiar la extensión del archivo no cambia el códec real.</li><li>Usa el código de error mostrado en pantalla al solicitar ayuda.</li></ul>
+<p>PROBLEMA: PANTALLA NEGRA DURANTE VIDEO</p>
+<ul><li>Presiona ATRÁS una vez y espera.</li><li>Si no responde, presiona HOME y abre nuevamente JGLCUSTOMS.</li><li>Reinicia el Roku si continúa.</li><li>Informa el nombre del canal o contenido y el código de error mostrado.</li></ul>
+<p>PROBLEMA: OLVIDÉ EL PIN +18</p>
+<ul><li>No pruebes números indefinidamente.</li><li>Contacta a la persona que configuró la aplicación.</li><li>Borrar o reinstalar desde cero puede eliminar también otras configuraciones.</li></ul></div></section><section class="section-card" id="seccion-9"><div class="section-kicker">SECCIÓN 09</div><h2>CÓMO PEDIR AYUDA CORRECTAMENTE</h2><div class="section-content"><p>Envía estos datos:</p>
+<ol><li>Modelo del Roku o de la Roku TV.</li><li>Qué sección estabas usando: TV, Películas o Series.</li><li>Nombre del canal, película o episodio.</li><li>Fotografía donde se vea el error completo.</li><li>Código de error que aparece en pantalla.</li><li>Si el control remoto todavía respondía.</li></ol>
+<p>NUNCA envíes:</p>
+<ul><li>Contraseña de Developer Mode.</li><li>Contraseña del Wi-Fi.</li><li>PIN +18.</li><li>Datos de tu cuenta Roku.</li><li>Tokens, claves o credenciales.</li></ul></div></section><section class="section-card" id="seccion-10"><div class="section-kicker">SECCIÓN 10</div><h2>COMPATIBILIDAD</h2><div class="section-content"><ul><li>Diseñada para Roku TV y reproductores Roku que permitan Developer Mode.</li><li>Interfaz preparada para televisores Full HD 1080p.</li><li>Diseñada tomando como referencia Philips Roku TV 40PFL6654/F8.</li><li>Los Roku 4K normalmente ofrecen mayor compatibilidad con H.265/HEVC.</li><li>La compatibilidad real depende del modelo, Roku OS, códec y fuente del video.</li><li>No se garantiza que todos los canales o archivos funcionen en todos los Roku.</li></ul></div></section><section class="section-card" id="seccion-11"><div class="section-kicker">SECCIÓN 11</div><h2>AVISO IMPORTANTE SOBRE ESTA VERSIÓN</h2><div class="section-content"><ul><li>Esta es una compilación experimental para instalación manual por Developer Mode. No proviene de Roku Channel Store.</li><li>Instálala únicamente si confías en la persona que te entregó estos archivos.</li><li>No redistribuyas, modifiques ni vendas el paquete sin autorización de JGLCUSTOMS.</li><li>No cambies el contenido de app.zip.</li></ul></div></section><section class="section-card" id="seccion-12"><div class="section-kicker">SECCIÓN 12</div><h2>AVISO DE USO Y CONTENIDO</h2><div class="section-content"><p>JGLCUSTOMS es una aplicación reproductora. El paquete app.zip no almacena películas, series ni canales de televisión. La disponibilidad del contenido depende de las fuentes configuradas y de la conexión a Internet.</p>
+<p>Cada usuario es responsable de utilizar únicamente contenido y servicios para los cuales tenga autorización legal. JGLCUSTOMS no concede derechos sobre contenido de terceros. Este aviso no sustituye asesoría legal.</p></div></section><section class="section-card" id="seccion-13"><div class="section-kicker">SECCIÓN 13</div><h2>VERIFICACIÓN OPCIONAL DEL ARCHIVO</h2><div class="section-content"><p>Nombre: app.zip</p>
+<p>SHA-256 esperado:</p>
+<p>5D999D5CC3AE966CEA5977A11594DC63C61FC8E52281A6FA89DB8F5C5DBCBAFD</p>
+<p>Si el SHA-256 es diferente, no instales el archivo y solicita otra copia.</p></div></section><section class="section-card" id="seccion-14"><div class="section-kicker">SECCIÓN 14</div><h2>RESUMEN RÁPIDO</h2><div class="section-content"><ol><li>Activa Developer Mode con: HOME x3, ARRIBA x2, DERECHA, IZQUIERDA, DERECHA, IZQUIERDA, DERECHA.</li><li>Anota la IP y crea la contraseña.</li><li>Entra desde un navegador a http://IP-DEL-ROKU.</li><li>Usuario: rokudev.</li><li>Presiona Upload y selecciona app.zip.</li><li>Presiona Replace with zip.</li><li>Espera a que JGLCUSTOMS abra en la TV.</li></ol>
+<p>JGLCUSTOMS IPTV ROKU</p></div></section>
+  <footer class="footer"><strong>JGLCUSTOMS IPTV ROKU</strong></footer>
+</main>
+</body>
+</html>
